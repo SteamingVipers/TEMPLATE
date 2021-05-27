@@ -16,7 +16,7 @@ class MessageHolder extends React.Component{
     }   
     
     componentDidMount(){
-        socket.on("newShoutout", (message, username) => {
+        this.state.socket.on("newShoutout", (message, username) => {
             const newMessage = {message:message,username:username}
             const newArrayOfMessages = this.state.arrOfMessages
             newArrayOfMessages.push(newMessage)
