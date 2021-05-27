@@ -5,21 +5,17 @@ class AdminSpeceficPage extends React.Component{
         super(props)   
         this.state = {
             loggedInUserRole: this.props.loggedInUserRole,
+            loggedInUserGoogleData:this.props.loggedInUserGoogleData,
         }
     }
     
-    // componentDidMount(){
-    //     // 
-    //     // form.addEventListener('submit', this.addUser(form.value))
-    // }
-
-
-
     addUser(event){
         event.preventDefault();
-        let input = document.querySelector('#addUserFormInput');
-        emailjs.send("service_c02xz3j","template_j3hykjj",{to_name:input.value},"user_l5iqJQOFtkuJlrm5bzM8J");
-        input.value = "";
+        let input1 = document.querySelector('#addUserFormInput');
+        let input2 = document.querySelector('#addRoleFormInput');
+        emailjs.send("service_c02xz3j","template_j3hykjj",{to_name:input1.value,role:input2.value},"user_l5iqJQOFtkuJlrm5bzM8J");
+        input1.value = "";
+        input2.value = "";
     }
 
     render(){
@@ -28,6 +24,9 @@ class AdminSpeceficPage extends React.Component{
             <form id='addUserForm' onSubmit={this.addUser}>
                 <span>Add New User: </span>
                 <input id='addUserFormInput' type="text" placeholder='Enter Email...'></input>
+                <br></br>
+                <span>Decide their role: </span>
+                <input id='addRoleFormInput' type="text" placeholder='Enter Role...'></input>
                 <input type="submit"></input>
             </form>
         </div>

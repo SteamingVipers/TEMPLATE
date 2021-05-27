@@ -1,7 +1,7 @@
 const Pool = require("pg").Pool;
 const pool = new Pool({
-    user: "",
-    password:"" ,
+    user: "postgres",
+    password:"Mnbvcdfghj01" ,
     database: "shoutout",
     host: "localhost",
     port: 5432
@@ -29,10 +29,8 @@ router.get('/messages/:role', async (req, res) => {
 //route to post staff messages
 router.post('/messages', async (req, res) => {
     try {
-        const { message,role} = req.body;
-        console.log(message)
-        console.log(role)
-        const newMessage = await pool.query("INSERT INTO messages(message,role,status,likes) VALUES ($1,$2,$3,$4)"  ,[message,role,true,0]);
+        const {message,role,username,pictureUrl} = req.body;
+        const newMessage = await pool.query("INSERT INTO messages(message,role,status,likes,username,picture_url) VALUES ($1,$2,$3,$4,$5,$6)"  ,[message,role,true,0,username,pictureUrl]);
         res.json(newMessage)
     } catch (err) {
         console.error(err.message)
@@ -62,10 +60,12 @@ router.delete('/messages/:id' , async(req, res) => {
 })
 
 //adding the user data to the users table
-router.post('/users' , async(req, res) =>{
+router.get('/users/:gmail/:role' , async(req, res) =>{
     try {
-        const { gmail, firstname, lastname } = req.body;
-        const newUser = await pool.query("INSERT INTO users(gmail, firstname, lastname) VALUES ($1, $2,$3)",[gmail,firstname, lastname])
+        const {gmail,role} = req.params;
+        await pool.query("INSERT INTO users(gmail,role) VALUES ($1,$2)",[gmail,role])
+        let data = await pool.query("SELECT * FROM users")
+        res.json(data.rows)
     } catch (err) {
         console.error(err.message)
     }
