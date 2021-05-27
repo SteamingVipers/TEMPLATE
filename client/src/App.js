@@ -103,9 +103,8 @@ class App extends React.Component{
         {this.state.currentTab === 'recentEvents' && <RecentEvents
         cohortId = {this.state.cohortId}
       />}
-
-
         {this.state.currentTab === 'admin' && <AdminPage
+        loggedInUserGoogleData={this.state.loggedInUserGoogleData}
         socket = {this.state.socket}
         currentEvent = {this.state.currentEvent}
         />}

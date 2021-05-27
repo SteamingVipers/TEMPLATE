@@ -7,6 +7,7 @@ class AdminSpeceficPage extends React.Component{
         super(props)   
         this.state = {
             loggedInUserRole: this.props.loggedInUserRole,
+            loggedInUserGoogleData:this.props.loggedInUserGoogleData,
             socket : this.props.socket
         }
 
@@ -35,6 +36,9 @@ class AdminSpeceficPage extends React.Component{
             <form id='addUserForm' onSubmit={this.addUser}>
                 <span>Add New User: </span>
                 <input id='addUserFormInput' type="text" placeholder='Enter Email...'></input>
+                <br></br>
+                <span>Decide their role: </span>
+                <input id='addRoleFormInput' type="text" placeholder='Enter Role...'></input>
                 <input type="submit"></input>
             </form>
             <form id='startEventForm' onSubmit={this.startEvent}>

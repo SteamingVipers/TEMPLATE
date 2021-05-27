@@ -16,8 +16,8 @@ class MessageHolder extends React.Component{
     }   
     
     componentDidMount(){
-        this.state.socket.on("newShoutout", (message, user) => {
-            const newMessage = {message:message, user:user}
+        socket.on("newShoutout", (message, username) => {
+            const newMessage = {message:message,username:username}
             const newArrayOfMessages = this.state.arrOfMessages
             newArrayOfMessages.push(newMessage)
             this.setState({arrOfMessages:newArrayOfMessages})
@@ -25,15 +25,16 @@ class MessageHolder extends React.Component{
     }
 
     postMessage(message){
-        let user = this.props.loggedInUserGoogleData.name;
-        const newMessage = {message:message, user:user}
+        let username = this.props.loggedInUserGoogleData.name;
+        const newMessage = {message:message,username:username,picture_url:this.props.loggedInUserGoogleData.imageUrl}
         const newArrayOfMessages = this.state.arrOfMessages
         newArrayOfMessages.push(newMessage)
         this.setState({arrOfMessages:newArrayOfMessages})
         const messageToSend = {
+            username:username,
             message:message,
-            user:user,
-            role:this.props.loggedInUserRole
+            role:this.props.loggedInUserRole,
+            pictureUrl:this.props.loggedInUserGoogleData.imageUrl
         }
         axios.post('http://localhost:8000/api/messages',messageToSend)
     }
@@ -50,10 +51,10 @@ class MessageHolder extends React.Component{
                 })
         }
         const messages = this.state.arrOfMessages.slice(0).reverse().map(message=>{
-            console.log(message)
             return(
                 <div className='single-message-container'> 
-                    <span className='username'>{message.user}: </span>
+                    <img className='userMessageImage' src={message.picture_url}></img>
+                    <span className='usernameForMessage'>{message.username}: </span>
                     <span className='single-message-content'>{message.message}</span>
                 </div>
             )

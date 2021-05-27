@@ -1,9 +1,18 @@
 CREATE DATABASE shoutout;
 
+    CREATE TABLE cohort (
+        cohort_id SERIAL,
+        start_date TEXT,
+        cohort_name TEXT,
+        end_date TEXT,
+        PRIMARY KEY (cohort_id)
+    );
+
     CREATE TABLE users (
         user_id SERIAL,
         cohort_id INT,
         gmail TEXT,
+        role TEXT,
         firstname TEXT,
         lastname TEXT,
         security_token INT,
@@ -19,18 +28,12 @@ CREATE DATABASE shoutout;
         FOREIGN KEY (user_id) REFERENCES users (user_id)
     );
 
-    CREATE TABLE cohort (
-        cohort_id SERIAL,
-        start_date TEXT,
-        cohort_name TEXT,
-        end_date TEXT,
-        PRIMARY KEY (cohort_id)
-    );
-
     CREATE TABLE messages (
+        username TEXT,
+        picture_url TEXT,
         msg_id SERIAL,
         event_id int,
-        cohort_id, int,
+        cohort_id int,
         message TEXT,
         role TEXT,
         user_id INT,
