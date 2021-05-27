@@ -7,9 +7,6 @@ const pool = new Pool({
     port: 5432
 });
 
-
-
-
 const router = require('express').Router();
 
 router.get('/', (req, res) => {
@@ -99,6 +96,9 @@ router.delete('cohort', async(req, res) => {
     }
 })
 
+// router.get('/event', async(req, res) =>{
+//     res.status(200).json({currentEvent})
+// })
 
 
 

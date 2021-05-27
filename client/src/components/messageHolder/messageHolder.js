@@ -2,16 +2,15 @@ import React from 'react'
 import axios from 'axios'
 import MessageInput from './messageInput/messageInput' //tyler
 
-import openSocket from "socket.io-client";
-const socket = openSocket("http://localhost:3000");
+
 
 
 class MessageHolder extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            socket : socket,
             arrOfMessages: [],
+            socket : this.props.socket
         }    
         this.postMessage = this.postMessage.bind(this)
     }   
@@ -63,12 +62,13 @@ class MessageHolder extends React.Component{
         return(
             <>
             <div className='messageContainer'>{messages}</div>
-            {this.props.loggedInUserRole !== null && 
+            {this.props.loggedInUserRole !== null && this.props.currentEvent.ongoing &&
                 <MessageInput
                     postMessage = {this.postMessage}
                     socket = {this.state.socket}
                     user = {this.props.loggedInUserGoogleData.name}
                 />}
+            {!this.props.currentEvent.ongoing && <span id='noEventMessage'>No Event Currently Ongoing.</span>}
             </>
         )
     }

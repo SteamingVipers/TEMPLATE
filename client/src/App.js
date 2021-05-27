@@ -6,6 +6,11 @@ import MessageHolder from './components/messageHolder/messageHolder'//tyler
 import AdminPage from './components/adminSpecificPage/adminSpecificPage' //tyler
 import PostMade from './components/postMade/postMade'
 import RecentEvents from './components/recent/RecentEvents'
+import axios from 'axios'
+
+import openSocket from "socket.io-client";
+const socket = openSocket("http://localhost:3000");
+
 class App extends React.Component{
   constructor(props){
     super(props)
@@ -16,6 +21,12 @@ class App extends React.Component{
       currentTab: 'openevent',
       userId: 2,
       cohortId: 1,
+      currentEvent : {
+          ongoing : false,
+          timeRemaining : 0,
+          eventId : null
+      },
+      socket: socket
       //img
     }
   
@@ -23,6 +34,29 @@ class App extends React.Component{
     this.changeTab = this.changeTab.bind(this)
     this.logInWithGoogleAuthentication = this.logInWithGoogleAuthentication.bind(this)
   }
+
+  componentDidMount(){
+    axios.get('http://localhost:8000/api/event')
+      .then((response) => {
+        this.setState({currentEvent : response.data.currentEvent})
+        console.log(this.state.currentEvent)
+      })
+
+      this.state.socket.on('endEvent', () => {
+        let eventUpdate = this.state.currentEvent;
+        eventUpdate.ongoing = false;
+        this.setState({currentEvent : eventUpdate})
+        console.log(this.state.currentEvent)
+      })
+
+      this.state.socket.on('countDown', (event) => {
+        let eventUpdate = this.state.currentEvent;
+        eventUpdate = event;
+        this.setState({currentEvent : eventUpdate})
+        console.log(this.state.currentEvent)
+      })
+  }
+
     // functions
   changeTab(str){
     this.setState({currentTab: str}
@@ -54,10 +88,14 @@ class App extends React.Component{
         loggedInUserGoogleData = {this.state.loggedInUserGoogleData}
         loggedInUserRole = {this.state.loggedInUserRole}
         changeTab = {this.changeTab}
+        currentEvent = {this.state.currentEvent}
+        socket = {this.state.socket}
         />
-        {this.state.currentTab === "openevent" && <MessageHolder 
+        {this.state.currentTab === "openevent" &&<MessageHolder 
         loggedInUserGoogleData = {this.state.loggedInUserGoogleData}
         loggedInUserRole = {this.state.loggedInUserRole}
+        socket = {this.state.socket}
+        currentEvent = {this.state.currentEvent}
         />}
         {this.state.currentTab === "mypost" && <PostMade
         id = {this.state.userId}
@@ -67,6 +105,8 @@ class App extends React.Component{
       />}
         {this.state.currentTab === 'admin' && <AdminPage
         loggedInUserGoogleData={this.state.loggedInUserGoogleData}
+        socket = {this.state.socket}
+        currentEvent = {this.state.currentEvent}
         />}
       </div>
     );

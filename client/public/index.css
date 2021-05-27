@@ -45,10 +45,12 @@ body{
     top: 40vh;
     left: 10%;
     width: 80.5vw;
-    height: 60%;
+    padding-bottom: 2vh;
+    height: auto;
     background-color: #f4f4f4;
     overflow-y: scroll;
     border-radius: 5px;
+    overflow: hidden;
 }
 .single-message-container{
     display: inline-block;
@@ -86,6 +88,14 @@ body{
     width: 80vw;
     height: 10vh;
     font-size: 8px;
+}
+
+#noEventMessage{
+    position: absolute;
+    font-size: 1.25rem;
+    width: 20vw;
+    left: 40vw;
+    top: 15vh;
 }
 
 .topBarButton{

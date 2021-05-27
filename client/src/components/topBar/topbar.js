@@ -4,7 +4,7 @@ class Topbar extends React.Component{
         super(props)   
 
         this.state = {
-
+            socket : this.props.socket
         }
     }
     render(){
@@ -18,7 +18,7 @@ class Topbar extends React.Component{
                     {this.props.loggedInUserRole === 'Admin'&&<button className='topBarButton' id='adminButton'onClick={()=>{this.props.changeTab('admin')}}>Admin</button>}
                     <button className='topBarButton' id='recentEvents' onClick={()=>{this.props.changeTab('recentEvents')}}>Recent Events</button>
                     <button className='topBarButton' id='cohortData' onClick={()=>{this.props.changeTab('cohortData')}}>Cohort Data</button>
-                    <button className='topBarButton' id='shoutoutsButton' onClick={()=>{this.props.changeTab('openevent')}}>Open Shoutout </button> 
+                    {this.props.currentEvent.ongoing === true && <button className='topBarButton' id='shoutoutsButton' onClick={()=>{this.props.changeTab('openevent')}}>Open Shoutout - {this.props.currentEvent.timeRemaining}</button> }
                     <button className='topBarButton' id='userProfileButton' onClick={()=>{this.props.changeTab('userProfile')}}><img id='userImage' height='40px' src={userImg}></img></button>
                 </div>
             </div>
