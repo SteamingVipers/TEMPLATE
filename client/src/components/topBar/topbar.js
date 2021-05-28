@@ -5,9 +5,10 @@ class Topbar extends React.Component{
         super(props)   
 
         this.state = {
-            socket : this.props.socket
+            socket : this.props.socket,
         }
     }
+
     render(){
         let userImg;
         if(this.props.loggedInUserGoogleData){
@@ -20,7 +21,7 @@ class Topbar extends React.Component{
                     <button className='topBarButton' id='recentEvents' onClick={()=>{this.props.changeTab('recentEvents')}}>Recent Events</button>
                     <button className='topBarButton' id='cohortData' onClick={()=>{this.props.changeTab('cohortData')}}>Cohort Data</button>
                     {this.props.loggedInUserRole === 'Admin'&&<button className='topBarButton' id='adminButton'onClick={()=>{this.props.changeTab('admin')}}>Admin</button>}
-                    {this.props.currentEvent.ongoing === true && <button className='topBarButton' id='shoutoutsButton' onClick={()=>{this.props.changeTab('openevent')}}>Open Shoutout - {this.props.currentEvent.timeRemaining}</button> }
+                    {this.props.currentEvent.ongoing === true && <button className='topBarButton' id='shoutoutsButton' onClick={()=>{this.props.changeTab('openevent')}}>Open Shoutout - {this.props.timeRemaining.hours}H {this.props.timeRemaining.minutes}M {this.props.timeRemaining.seconds}S</button> }
                     
                 </div>
             </div>

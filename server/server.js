@@ -23,37 +23,37 @@ let currentEvent = {
     eventId : null
 }
 
-const startEvent = (time) => {
-    setTimeout(() => {
-        return true;
-    }, time * 1000)
-}
-
 io.on('connection', (socket) => {
     //we can handle what happens on connection here
     console.log('Socket Connected')
 
     socket.emit('id', socket.id);
 
-    socket.on('newShoutout', (message, user) => {
-        socket.broadcast.emit('newShoutout', message, user)
+    socket.on('newShoutout', (message, user, image) => {
+        socket.broadcast.emit('newShoutout', message, user, image)
+    })
+
+    socket.on('addTenToEvent', () => {
+        currentEvent.timeRemaining += 600
+    })
+
+    socket.on('forceEndEvent', () => {
+        currentEvent.timeRemaining = 0;
     })
 
     socket.on('startEvent', (time) => {
         if(!currentEvent.ongoing){
-            currentEvent.timeRemaining = time;
+            currentEvent.timeRemaining = time * 60;
             currentEvent.ongoing = true;
             let countdown = setInterval(() => {
-            currentEvent.timeRemaining --;
-            if(currentEvent.timeRemaining <= 0){
-                clearInterval(countdown)
-                currentEvent.ongoing = false
-            }
-            io.emit('countDown', currentEvent) 
+                currentEvent.timeRemaining --;
+                if(currentEvent.timeRemaining <= 0){
+                    clearInterval(countdown)
+                    currentEvent.ongoing = false
+                    io.emit('endEvent')
+                }
+                io.emit('countDown', currentEvent) 
             }, 1000)
-            if(startEvent(time)){
-                io.emit('endEvent')
-            }
         }
     })
 })

@@ -16,8 +16,8 @@ class MessageHolder extends React.Component{
     }   
     
     componentDidMount(){
-        this.state.socket.on("newShoutout", (message, username) => {
-            const newMessage = {message:message,username:username}
+        this.state.socket.on("newShoutout", (message, username, image) => {
+            const newMessage = {message:message,username:username,picture_url:image}
             const newArrayOfMessages = this.state.arrOfMessages
             newArrayOfMessages.push(newMessage)
             this.setState({arrOfMessages:newArrayOfMessages})
@@ -68,6 +68,7 @@ class MessageHolder extends React.Component{
                     postMessage = {this.postMessage}
                     socket = {this.state.socket}
                     user = {this.props.loggedInUserGoogleData.name}
+                    image = {this.props.loggedInUserGoogleData.imageUrl}
                 />}
             {!this.props.currentEvent.ongoing && <span id='noEventMessage'>No Event Currently Ongoing.</span>}
             </>

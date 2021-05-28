@@ -16,7 +16,7 @@ class MessageInput extends React.Component{
                         event.preventDefault()
                         window.alert('please provide a message to send')
                     } else {
-                        this.props.socket.emit('newShoutout', event.target.value, this.props.user) 
+                        this.props.socket.emit('newShoutout', event.target.value, this.props.user, this.props.image) 
                         this.props.postMessage(event.target.value)
                         event.target.value = ''
                         event.preventDefault()

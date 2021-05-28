@@ -26,6 +26,11 @@ class App extends React.Component{
           timeRemaining : 0,
           eventId : null
       },
+      timeRemaining: {
+        seconds : 0,
+        minutes : 0,
+        hours : 0,
+      },
       socket: socket
       //img
     }
@@ -54,6 +59,19 @@ class App extends React.Component{
         eventUpdate = event;
         this.setState({currentEvent : eventUpdate})
         console.log(this.state.currentEvent)
+
+        
+        if(this.state.currentEvent.timeRemaining > 60){
+          let minutes = Math.floor(this.state.currentEvent.timeRemaining / 60)
+          let seconds = Math.floor(this.state.currentEvent.timeRemaining % 60)
+          let hours = 0;
+          if(minutes > 60){
+              hours = Math.floor(minutes / 60)
+              minutes = Math.floor(minutes % 60)
+          }
+          let timeObj = {seconds, minutes, hours}
+          this.setState({timeRemaining:timeObj})
+      }
       })
   }
 
@@ -90,6 +108,7 @@ class App extends React.Component{
         changeTab = {this.changeTab}
         currentEvent = {this.state.currentEvent}
         socket = {this.state.socket}
+        timeRemaining = {this.state.timeRemaining}
         />
         {this.state.currentTab === "openevent" &&<MessageHolder 
         loggedInUserGoogleData = {this.state.loggedInUserGoogleData}
