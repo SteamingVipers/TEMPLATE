@@ -56,6 +56,7 @@ class MessageHolder extends React.Component{
                     <img className='userMessageImage' src={message.picture_url}></img>
                     <span className='usernameForMessage'>{message.username}: </span>
                     <span className='single-message-content'>{message.message}</span>
+                    {this.props.loggedInUserRole === 'Admin' && <button className='deletePostButton'>Delete Post</button>}
                 </div>
             )
             })

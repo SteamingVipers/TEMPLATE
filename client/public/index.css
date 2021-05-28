@@ -55,13 +55,15 @@ body{
 .single-message-container{
     display: inline-block;
     position: relative;
-    margin-top: 1%;
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
     margin-left: 2%;
     padding : 20px;
     height: auto;
     width: 93%;
     border-radius: 5px;
     background-color: #FAFAFA;
+    word-break: break-all;
 }
 #message-input-box{
     position: absolute;
@@ -100,7 +102,6 @@ body{
 
 .topBarButton{
     position: relative;
-    left: 52.85vw;
     top: 1vh;
     height: 5vh;
     border-radius: 5px;
@@ -135,8 +136,8 @@ body{
 
 #userImage{
     position: absolute;
-    top: -1.75px;
-    right: -1.95px;
+    top: -1.5px;
+    right: -1.6px;
     border-radius : 20px;
 }
 
@@ -145,21 +146,57 @@ body{
     top: 10vh;
     left: 10%;
     width: 80.5vw;
-    height: 90%;
+    height: auto;
+    padding: 20px;
     background-color: #f4f4f4;   
+    border-radius: 5px;
 }
+
+.adminPageButton{
+    border-radius: 5px;
+    border: #ef9836 3px solid;
+    cursor: pointer;
+    color: #ef9836;
+}
+
+#startEventForm{
+    padding-top: 15px;
+}
+
+#addUserRoleTitle{
+    padding-left: 15px;
+}
+
+#addUserFormInput{
+    position: relative;
+}
+
 .userMessageImage{
-    position: absolute;
+    position: relative;
     height: 40px;
     top: 20%;
-    left: 1.5%;
+    left: 0%;
     border-radius: 20px;
 }
 .usernameForMessage{
     position: relative;
-    left: 4%;
+    margin-left: 1%;
+    bottom: 12px;
+    color: #0090da;
 }
 .single-message-content{
     position: relative;
-    left: 4.2%;
+    bottom: 12px;
+    line-height: 2;
+    word-break: break-all;
+}
+
+.deletePostButton{
+    position: absolute;
+    left: 90%;
+    top: 105%;
+    border-radius: 5px;
+    border: #ef3636 3px solid;
+    cursor: pointer;
+    color: #ef3636;
 }

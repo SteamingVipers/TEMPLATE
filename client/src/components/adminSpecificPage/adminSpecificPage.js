@@ -18,6 +18,7 @@ class AdminSpeceficPage extends React.Component{
         event.preventDefault();
         let input = document.querySelector('#addUserFormInput');
         emailjs.send("service_c02xz3j","template_j3hykjj",{to_name:input.value},"user_l5iqJQOFtkuJlrm5bzM8J");
+        window.alert(`${input.value} has been sent an activation link.`)
         input.value = "";
     } //Kolby
 
@@ -34,16 +35,16 @@ class AdminSpeceficPage extends React.Component{
         return(
         <div className='adminSpecificPage-container'>
             <form id='addUserForm' onSubmit={this.addUser}>
-                <span>Add New User: </span>
+                <span id='addUserTitle   '>Add New User: </span>
                 <input id='addUserFormInput' type="text" placeholder='Enter Email...'></input>
-                <br></br>
-                <span>Decide their role: </span>
-                <input id='addRoleFormInput' type="text" placeholder='Enter Role...'></input>
-                <input type="submit"></input>
+                <span id='addUserRoleTitle'>Decide their role: </span>
+                <input id='addRoleFormInput' type="text" placeholder='Admin, Staff, or Student'></input>
+                <input className='adminPageButton' type="submit"></input>
             </form>
             <form id='startEventForm' onSubmit={this.startEvent}>
-                <span>Start Event:  </span>
-                <input type="submit"></input>
+                {!this.props.currentEvent.ongoing && <span>Start Event:  </span>}
+                {!this.props.currentEvent.ongoing && <input className='adminPageButton' type="submit" value='Start'></input>}
+                {this.props.currentEvent.ongoing && <span> Event Ongoing </span>}
             </form>
         </div>
         )
