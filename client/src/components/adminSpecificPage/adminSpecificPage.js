@@ -16,16 +16,21 @@ class AdminSpeceficPage extends React.Component{
     
     addUser(event){ //function that handles sending emails to users
         event.preventDefault();
-        let input = document.querySelector('#addUserFormInput');
-        emailjs.send("service_c02xz3j","template_j3hykjj",{to_name:input.value},"user_l5iqJQOFtkuJlrm5bzM8J");
-        window.alert(`${input.value} has been sent an activation link.`)
-        input.value = "";
+        let input1 = document.querySelector('#addUserFormInput');
+        let input2 = document.querySelector('#addRoleFormInput');
+        let email = input1.value;
+        let role = input2.value;
+        input1.value = "";
+        input2.value = "";
+        window.alert(`${email} has been sent a confirmation link.`)
+        axios.get(`http://localhost:8000/api/users/${email}/${role}`)
+        emailjs.send("service_c02xz3j","template_j3hykjj",{to_name:email},"user_l5iqJQOFtkuJlrm5bzM8J")
     } //Kolby
 
     startEvent(event){
         event.preventDefault();
         if(!this.props.currentEvent.ongoing){
-            let time = 600;
+            let time = 50;
             this.props.currentEvent.ongoing = true;
             this.state.socket.emit('startEvent', time)
         }
